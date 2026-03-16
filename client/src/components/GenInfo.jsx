@@ -50,7 +50,7 @@ const GenInfo = () => {
 
 export default GenInfo;
 
-export const Brands = () => {
+export const Brands = ({ title = "Top Brands", hideTitle = false }) => {
   const navigate = useNavigate();
 
   const data = [
@@ -62,7 +62,7 @@ export const Brands = () => {
 
   return (
     <div className="flex flex-col items-center my-16 w-full">
-      <p className="child:ring-white font-bold mb-6">Top Brands</p>
+      {!hideTitle && <p className="child:ring-white font-bold mb-6">{title}</p>}
       <div className="flex flex-wrap justify-center">
         {data.map((elem, id) => (
           <div

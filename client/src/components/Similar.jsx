@@ -14,9 +14,15 @@ const Similar = ({ gender, id }) => {
             try {
                 const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/category/${gender}`);
                 if (isMounted) {
-                    const sliced = res.data.slice(0, 15);
-                    const filtered = sliced.filter(elem => elem._id != id)
-                    setProducts(filtered);
+                    if (Array.isArray(res.data)) {
+                        const sliced = res.data.slice(0, 15);
+                        const filtered = sliced.filter(elem => elem._id != id)
+                        setProducts(filtered);
+                    } else {
+                        console.error('API response is not an array:', res.data);
+                        setProducts([]);
+                        setError(new Error('Unexpected API response format'));
+                    }
                     setLoading(false);
                 }
             } catch (err) {

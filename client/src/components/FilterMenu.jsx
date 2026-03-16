@@ -55,7 +55,7 @@ const FilterMenu = forwardRef(({ setData, isVisible, setVisibility }, ref) => {
             setData(res.data); // Update data with filtered results
         } catch (error) {
             setData([]); // Clear data on error
-            console.error(`Error while fetching products:`, error.response.data.message);
+            console.error(`Error while fetching products:`, error.response?.data?.message || error.message);
         }
         setVisibility(false); // Close filter menu after applying filters
     };
