@@ -7,7 +7,7 @@ import Home from "./pages/Home.jsx";
 import Men from "./pages/Men.jsx";
 import Women from "./pages/Women.jsx";
 import Kids from "./pages/Kids.jsx";
-import About from "./components/About.jsx";
+import About from "./pages/About.jsx";
 import ProductDetails from "./components/ProductDetails.jsx";
 import SearchResults from "./components/SearchResults.jsx";
 import Cart from "./pages/Cart.jsx";

@@ -13,8 +13,14 @@ const Kids = () => {
             try {
                 const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/category/child`);
                 if (isMounted) {
-                    const sorted = res.data.sort((a, b) => parseInt(b.reviews) - parseInt(a.reviews))
-                    setProducts(sorted);
+                    if (Array.isArray(res.data)) {
+                        const sorted = [...res.data].sort((a, b) => (parseInt(b.reviews) || 0) - (parseInt(a.reviews) || 0));
+                        setProducts(sorted);
+                    } else {
+                        console.error('API response is not an array:', res.data);
+                        setProducts([]);
+                        setError(new Error('Unexpected API response format'));
+                    }
                     setLoading(false);
                 }
             } catch (err) {

@@ -17,11 +17,17 @@ const SearchResults = () => {
             try {
                 const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/products/search?q=${encodeURIComponent(search)}`);
                 if (isMounted) {
-                    if (search.includes('women')) {
-                        const data = res.data.filter(elem => elem.category === 'women');
-                        setProducts(data);
+                    if (Array.isArray(res.data)) {
+                        if (search.includes('women')) {
+                            const data = res.data.filter(elem => elem.category === 'women');
+                            setProducts(data);
+                        } else {
+                            setProducts(res.data.slice(0, 50));
+                        }
                     } else {
-                        setProducts(res.data.slice(0, 50));
+                        console.error('API response is not an array:', res.data);
+                        setProducts([]);
+                        setError(new Error('Unexpected API response format'));
                     }
                     setLoading(false);
                 }

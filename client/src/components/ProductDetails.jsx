@@ -44,7 +44,13 @@ const ProductDetails = () => {
             try {
                 const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/product/${id}`);
                 if (isMounted) {
-                    setProduct(res.data);
+                    if (res.data && typeof res.data === 'object' && !Array.isArray(res.data)) {
+                        setProduct(res.data);
+                    } else {
+                        console.error('API response is not a valid product object:', res.data);
+                        setProduct(null);
+                        setError(new Error('Unexpected API response format'));
+                    }
                     setLoading(false);
                 }
             } catch (err) {
